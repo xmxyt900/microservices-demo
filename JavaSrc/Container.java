@@ -6,10 +6,12 @@
  */
 public class Container {
 
+	String hostName;
 	String containerId;
 	double cpuUtil;
 	double memUtil;
-	Container(String p_containerId, double p_cpuUtil, double p_memUtil){
+	Container(String p_hostName, String p_containerId, double p_cpuUtil, double p_memUtil){
+		this.hostName = p_hostName;
 		this.containerId = p_containerId;
 		this.cpuUtil = p_cpuUtil;
 		this.memUtil = p_memUtil;
@@ -50,5 +52,19 @@ public class Container {
 	 */
 	public void setMemUtil(double memUtil) {
 		this.memUtil = memUtil;
+	}
+
+	/**
+	 * @return the hostName
+	 */
+	public String getHostName() {
+		return hostName;
+	}
+
+	/**
+	 * @param hostName the hostName to set
+	 */
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
 	}
 }
