@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 class CommandExecution {
 
-
 	public CommandExecution() {
 
 	}
@@ -145,7 +144,7 @@ class CommandExecution {
 	}
 
 	/**
-	 * To be finished
+	 * Generate the worker node information with split operations.
 	 * 
 	 * @param workcernodeInfo
 	 * @return
@@ -177,6 +176,12 @@ class CommandExecution {
 
 	}
 
+	/**
+	 * Put all the containers on the same host into a single container list
+	 * @param p_hostName
+	 * @param p_containerList
+	 * @return
+	 */
 	ArrayList<Container> getContainerListByHostName(String p_hostName, ArrayList<Container> p_containerList) {
 		ArrayList<Container> containerListOnSameHost = new ArrayList<Container>();
 		for (Container container : p_containerList) {
@@ -186,6 +191,29 @@ class CommandExecution {
 		}
 
 		return containerListOnSameHost;
+	}
+
+	/**
+	 * Stop (deactivate) the containers in the deactivated container list
+	 * @param p_deactivatedContainerList
+	 * @return
+	 */
+	String deactivateContatiners(ArrayList<Container> p_deactivatedContainerList) {
+		String commandResults = null;
+		String command;
+		System.out.println("Stop Containers......");
+		String args_hostName;
+		String arges_containerId;
+
+		for (Container container : p_deactivatedContainerList) {
+			args_hostName = container.getHostName();
+			arges_containerId = container.containerId;
+			// This shell file requires two parameters
+			command = "sh stopContainer.sh " + args_hostName + " " + arges_containerId;
+			commandResults = executeCommand(command);
+
+		}
+		return commandResults;
 	}
 
 }
