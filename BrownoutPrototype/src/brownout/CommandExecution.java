@@ -26,7 +26,7 @@ class CommandExecution {
 	String getWorkerNodesCPU() {
 		String commandResults;
 		String command = "sh getWorkerNodesCPU.sh";
-		System.out.println("Output Worker Nodes Utilization:");
+		System.out.println("======Output Worker Nodes Utilization======");
 		commandResults = executeCommand(command);
 		return commandResults;
 
@@ -40,7 +40,7 @@ class CommandExecution {
 	String getContainersCPU() {
 		String commandResults;
 		String command = "sh getContainersUtil.sh";
-		System.out.println("Output Containers Utilization:");
+		System.out.println("======Output Containers Utilization======");
 		commandResults = executeCommand(command);
 		return commandResults;
 	}
@@ -201,13 +201,13 @@ class CommandExecution {
 	String deactivateContatiners(ArrayList<Container> p_deactivatedContainerList) {
 		String commandResults = null;
 		String command;
-		System.out.println("Stop Containers......");
+		System.out.println("======Stop Containers======");
 		String args_hostName;
 		String arges_containerId;
 
 		for (Container container : p_deactivatedContainerList) {
 			args_hostName = container.getHostName();
-			arges_containerId = container.containerId;
+			arges_containerId = container.getContainerId();
 			// This shell file requires two parameters
 			command = "sh stopContainer.sh " + args_hostName + " " + arges_containerId;
 			commandResults = executeCommand(command);
@@ -216,4 +216,25 @@ class CommandExecution {
 		return commandResults;
 	}
 
+	/**
+	 * Get service name of container
+	 * @param container
+	 * @return
+	 */
+	String getServiceByContainerName(Container container){
+		String args_hostName = container.getHostName();;
+		String arges_containerId = container.getContainerId();
+		System.out.println("======Output Service of Stopped containers======");
+		String command = "sh getServiceIdByContianerID.sh " + args_hostName + " " + arges_containerId;
+		String commandResults = executeCommand(command);
+		
+		//Example: "com.docker.swarm.service.id": "jyyuzs6p6u2e5c362jtp9m5at", 
+		int beginIndex = commandResults.indexOf(':') + 3;   //Begin with 'j'
+		int endIndex = commandResults.length() - 3;   //end with 't'
+		String serviceId = commandResults.substring(beginIndex, endIndex); 
+	    System.out.println(serviceId);
+				
+		return serviceId;
+	}
+	
 }

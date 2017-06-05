@@ -36,5 +36,8 @@ public class BrownoutMain {
 		ArrayList<Container> deactivatedContainerList = bc.getDeactivatedContainerList(workerNodeList, dimmerValue);
 		ce.deactivateContatiners(deactivatedContainerList);
 
+		for(Container container: deactivatedContainerList){
+			ce.getServiceByContainerName(container);
+		}
 	}
 }
