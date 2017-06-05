@@ -37,7 +37,9 @@ public class BrownoutMain {
 		ce.deactivateContatiners(deactivatedContainerList);
 
 		for(Container container: deactivatedContainerList){
-			ce.getServiceByContainerName(container);
+			String serviceId;
+			serviceId = ce.getServiceByContainerName(container);
+			ce.updateServices(serviceId);
 		}
 	}
 }

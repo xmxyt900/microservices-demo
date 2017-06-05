@@ -217,7 +217,8 @@ class CommandExecution {
 	}
 
 	/**
-	 * Get service name of container
+	 * Get service id of container id, its implementation is based on 
+	 * docker inspect
 	 * @param container
 	 * @return
 	 */
@@ -235,6 +236,16 @@ class CommandExecution {
 	    System.out.println(serviceId);
 				
 		return serviceId;
+	}
+	
+	/**
+	 * Restart the stopped containers (new container instances)
+	 * @param serviceId
+	 */
+	void updateServices(String serviceId){
+		System.out.println("======Update Services====");
+		String command = "sh  updateService.sh " + serviceId;
+		executeCommand(command);
 	}
 	
 }
