@@ -2,8 +2,13 @@ package brownout;
 
 import java.util.ArrayList;
 
+import model.Container;
+import model.WorkerNode;
+import policy.FirstComponentPolicy;
+
 public class BrownoutMain {
 
+	public final static double OVERLOAD_THRESHOLD = 0.0;
 	public static void main(String args[]) {
 
 		CommandExecution ce = new CommandExecution();
@@ -33,7 +38,9 @@ public class BrownoutMain {
 
 		BrownoutController bc = new BrownoutController();
 		double dimmerValue = bc.getDimmerValue(workerNodeList);
-		ArrayList<Container> deactivatedContainerList = bc.getDeactivatedContainerList(workerNodeList, dimmerValue);
+		
+		ArrayList<Container> deactivatedContainerList = (new FirstComponentPolicy(dimmerValue, workerNodeList)).getDeactivatedContainerList();
+	
 		ce.deactivateContatiners(deactivatedContainerList);
 
 		for(Container container: deactivatedContainerList){

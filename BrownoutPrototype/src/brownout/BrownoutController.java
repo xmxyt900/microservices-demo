@@ -2,6 +2,8 @@ package brownout;
 
 import java.util.ArrayList;
 
+import model.WorkerNode;
+
 /**
  * This class is used to:
  * calculate the number of overloaded hosts;
@@ -53,22 +55,4 @@ public class BrownoutController {
 		return dimmerValue;
 	}
 	
-	/**
-	 * Get the deactivated containers based on different scheduling policies.
-	 * @param p_workerNodeList
-	 * @param dimmerValue
-	 * @return
-	 */
-	ArrayList<Container> getDeactivatedContainerList(ArrayList<WorkerNode> p_workerNodeList, double dimmerValue){
-		ArrayList<Container> deactivatedContainerList = new ArrayList<Container>();
-		for(WorkerNode wn: p_workerNodeList){
-			if(wn.getCpuUtil() >= OVERLOAD_THRESHOLD){
-				for(Container container: wn.getContainersList()){
-					deactivatedContainerList.add(container);
-					break;
-				}
-			}
-		}		
-		return deactivatedContainerList;
-	}
 }

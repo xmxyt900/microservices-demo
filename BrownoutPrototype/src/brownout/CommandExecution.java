@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import model.Container;
+import model.WorkerNode;
+
 /**
  * This class is used for executing shell commands on worker nodes from the
  * master node.
@@ -84,6 +87,52 @@ class CommandExecution {
 		return sb.toString();
 	}
 
+	
+	/**
+	 * Execute the shell commands and output the results (normal outputs and
+	 * errors).
+	 * 
+	 * @param command
+	 */
+	String executeCommandWithLessInfo(String command) {
+
+		String input = null;
+		String error = null;
+		String tempInput = null;
+		StringBuffer sb = new StringBuffer("");
+
+		try {
+			Process process = Runtime.getRuntime().exec(command);
+			BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+			BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+			while ((input = stdInput.readLine()) != null) {
+				if(!(input.equals(tempInput))){
+				System.out.println(input);
+				}
+				
+				// Append the line to string
+				// "\n" is required to added, otherwise all the outputs will be
+				// in a single line
+				sb.append(input + "\n");
+				tempInput = input;
+			}
+
+			while ((error = stdError.readLine()) != null) {
+				System.out.println(error);
+			}
+
+		} catch (IOException e) {
+			System.out.println("Excepcion: ");
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+		return sb.toString();
+	}
+	
+	
 	/**
 	 * Check the operation system, the commands are only supported to run under
 	 * Linux OS now.
@@ -245,7 +294,7 @@ class CommandExecution {
 	void updateServices(String serviceId){
 		System.out.println("======Update Services====");
 		String command = "sh  updateService.sh " + serviceId;
-		executeCommand(command);
+		executeCommandWithLessInfo(command);
 	}
 	
 }
