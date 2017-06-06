@@ -89,8 +89,8 @@ class CommandExecution {
 
 	
 	/**
-	 * Execute the shell commands and output the results (normal outputs and
-	 * errors).
+	 * Execute the shell commands and output the simplified results (not put same info as
+	 * previous).
 	 * 
 	 * @param command
 	 */

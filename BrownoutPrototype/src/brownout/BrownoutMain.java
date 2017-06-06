@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.Container;
 import model.WorkerNode;
-import policy.FirstComponentPolicy;
+import policy.*;
 
 public class BrownoutMain {
 
@@ -39,7 +39,9 @@ public class BrownoutMain {
 		BrownoutController bc = new BrownoutController();
 		double dimmerValue = bc.getDimmerValue(workerNodeList);
 		
-		ArrayList<Container> deactivatedContainerList = (new FirstComponentPolicy(dimmerValue, workerNodeList)).getDeactivatedContainerList();
+//		ArrayList<Container> deactivatedContainerList = (new FirstComponentPolicy(dimmerValue, workerNodeList)).getDeactivatedContainerList();
+		ArrayList<Container> deactivatedContainerList = (new LowestUtilizationFirstPolicy(dimmerValue, workerNodeList)).getDeactivatedContainerList();
+
 	
 		ce.deactivateContatiners(deactivatedContainerList);
 
