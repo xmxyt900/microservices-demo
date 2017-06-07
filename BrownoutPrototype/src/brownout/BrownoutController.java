@@ -16,7 +16,7 @@ public class BrownoutController {
 	final double OVERLOAD_THRESHOLD = 0.0;
 	
 	
-	BrownoutController(){
+	public BrownoutController(){
 		
 	}
 	
@@ -42,7 +42,7 @@ public class BrownoutController {
 	 * @param p_workerNodeList
 	 * @return
 	 */
-	double getDimmerValue(ArrayList<WorkerNode> p_workerNodeList){
+	public double getDimmerValue(ArrayList<WorkerNode> p_workerNodeList){
 		double dimmerValue = 0.0f;
 		int numberOfOverloadedHosts = getNumberOfOverLoadedHosts(p_workerNodeList);
 		int numberOfHosts = p_workerNodeList.size();

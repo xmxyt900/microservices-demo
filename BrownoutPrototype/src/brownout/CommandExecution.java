@@ -15,7 +15,7 @@ import model.WorkerNode;
  * @author minxianx
  *
  */
-class CommandExecution {
+public class CommandExecution {
 
 	public CommandExecution() {
 
@@ -26,7 +26,7 @@ class CommandExecution {
 	 * 
 	 * @return
 	 */
-	String getWorkerNodesCPU() {
+	public String getWorkerNodesCPU() {
 		String commandResults;
 		String command = "sh getWorkerNodesCPU.sh";
 		System.out.println("======Output Worker Nodes Utilization======");
@@ -40,7 +40,7 @@ class CommandExecution {
 	 * 
 	 * @return
 	 */
-	String getContainersCPU() {
+	public String getContainersCPU() {
 		String commandResults;
 		String command = "sh getContainersUtil.sh";
 		System.out.println("======Output Containers Utilization======");
@@ -137,7 +137,7 @@ class CommandExecution {
 	 * Check the operation system, the commands are only supported to run under
 	 * Linux OS now.
 	 */
-	void checkOsInformation() {
+	public void checkOsInformation() {
 		String os = System.getProperty("os.name");
 
 		if (os.equals("Linux"))
@@ -157,7 +157,7 @@ class CommandExecution {
 	 * @param containersInfo
 	 * @return
 	 */
-	ArrayList<Container> generateContainerList(String containersInfo) {
+	public ArrayList<Container> generateContainerList(String containersInfo) {
 		ArrayList<Container> cl = new ArrayList<Container>();
 		String[] stringLines = containersInfo.split("\\r?\\n");
 		String hostName = null;
@@ -198,7 +198,7 @@ class CommandExecution {
 	 * @param workcernodeInfo
 	 * @return
 	 */
-	ArrayList<WorkerNode> generateWorkNodeList(String workcernodeInfo, ArrayList<Container> p_containerList) {
+	public ArrayList<WorkerNode> generateWorkNodeList(String workcernodeInfo, ArrayList<Container> p_containerList) {
 		ArrayList<WorkerNode> wnl = new ArrayList<WorkerNode>();
 
 		String[] stringLines = workcernodeInfo.split("\\r?\\n");
@@ -247,7 +247,7 @@ class CommandExecution {
 	 * @param p_deactivatedContainerList
 	 * @return
 	 */
-	String deactivateContatiners(ArrayList<Container> p_deactivatedContainerList) {
+	public String deactivateContatiners(ArrayList<Container> p_deactivatedContainerList) {
 		String commandResults = null;
 		String command;
 		System.out.println("======Stop Containers======");
@@ -271,7 +271,7 @@ class CommandExecution {
 	 * @param container
 	 * @return
 	 */
-	String getServiceByContainerName(Container container){
+	public String getServiceByContainerName(Container container){
 		String args_hostName = container.getHostName();;
 		String arges_containerId = container.getContainerId();
 		System.out.println("======Output Service of Stopped containers======");
@@ -291,7 +291,7 @@ class CommandExecution {
 	 * Restart the stopped containers (new container instances)
 	 * @param serviceId
 	 */
-	void updateServices(String serviceId){
+	public void updateServices(String serviceId){
 		System.out.println("======Update Services====");
 		String command = "sh  updateService.sh " + serviceId;
 		executeCommandWithLessInfo(command);
