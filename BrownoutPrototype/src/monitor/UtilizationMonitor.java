@@ -3,6 +3,7 @@ package monitor;
 import java.util.ArrayList;
 
 import brownout.BrownoutController;
+import brownout.ComposeFileExecution;
 import brownout.ContainerCommandExecution;
 import brownout.ServiceCommandExecution;
 import brownout.WorkerNodeCommandExecution;
@@ -16,6 +17,9 @@ public class UtilizationMonitor extends AbstractMonitor{
 	void monitor() {
 		// TODO Auto-generated method stub
 
+		ComposeFileExecution composeFileExecution = new ComposeFileExecution();
+		composeFileExecution.initialDeploymentByComposeFile();
+				
 		// Execute commands for containers
 		ContainerCommandExecution containerCommandExecution = new ContainerCommandExecution();
 		String containersInfo = containerCommandExecution.getContainersCPU();
@@ -39,6 +43,9 @@ public class UtilizationMonitor extends AbstractMonitor{
 
 		//Stop the containers in the list
 		containerCommandExecution.stopContatiners(deactivatedContainerList);
+		
+		//update service deployment
+		composeFileExecution.updateDeploymentByComposeFile();
 
 		//Prepare to restart the containers
 		ServiceCommandExecution serviceCommandExecution = new ServiceCommandExecution();		

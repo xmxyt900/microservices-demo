@@ -88,7 +88,7 @@ public class CommandExecution {
 			}
 
 		} catch (IOException e) {
-			System.out.println("Excepcion: ");
+			System.out.println("Excepction: ");
 			e.printStackTrace();
 			System.exit(-1);
 		}

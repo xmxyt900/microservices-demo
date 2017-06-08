@@ -12,11 +12,15 @@ services:
       placement:
         constraints: [node.role == manager]
   front-end:
-#    image: weaveworksdemos/front-end
-    image: simplefrontend
+    image: weaveworksdemos/front-end
+#    image: simplefrontend
     hostname: front-end
+    labels: 
+      brownout.feature: "optional"
     deploy:
       replicas: 2
+      restart_policy:
+        condition: none
   edge-router:
     image: weaveworksdemos/edge-router
     ports:
@@ -31,6 +35,8 @@ services:
     hostname: catalogue
     environment:
       - ZIPKIN=http://zipkin:9411/api/v1/spans
+    labels:
+      brownout.feature: "optional"
     deploy:
       replicas: 2
       restart_policy:
@@ -50,6 +56,8 @@ services:
     hostname: carts
     environment:
       - JAVA_OPTS=-Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+    labels:
+      brownout.feature: "optional"
     deploy:
       replicas: 2
       restart_policy:
@@ -65,6 +73,8 @@ services:
     hostname: orders
     environment:
       - JAVA_OPTS=-Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+    labels:
+      brownout.feature: "optional"
     deploy:
       replicas: 2
       restart_policy:
@@ -80,6 +90,8 @@ services:
     hostname: shipping
     environment:
       - JAVA_OPTS=-Xms64m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom
+    labels:
+      brownout.feature: "optional"
     deploy:
       replicas: 2
       restart_policy:
@@ -89,18 +101,24 @@ services:
     hostname: queue-master
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      brownout.feature: "optional"
     deploy:
       restart_policy:
         condition: none
   rabbitmq:
     image: rabbitmq:3.6.8
     hostname: rabbitmq
+    labels:
+      brownout.feature: "optional"
     deploy:
       replicas: 2
       restart_policy:
         condition: none
   payment:
     image: weaveworksdemos/payment
+    depends_on:
+      - zipkin
     hostname: payment
     environment:
       - ZIPKIN=http://zipkin:9411/api/v1/spans
@@ -110,9 +128,13 @@ services:
   user:
     image: weaveworksdemos/user
     hostname: user
+    depends_on:
+      - zipkin
     environment:
       - MONGO_HOST=user-db:27017
       - ZIPKIN=http://zipkin:9411/api/v1/spans
+    labels:
+      brownout.feature: "optional"
     deploy:
       replicas: 2
       restart_policy:
@@ -128,8 +150,10 @@ services:
     hostname: zipkin
     ports:
       - "9411:9411"
+    labels:
+      brownout.feature: "optional"
     deploy:
-      replicas: 2
+      replicas: 4
       restart_policy:
         condition: none
 #  user-sim:

@@ -19,6 +19,8 @@ services:
       brownout.feature: "optional"
     deploy:
       replicas: 2
+      restart_policy:
+        condition: none
   edge-router:
     image: weaveworksdemos/edge-router
     ports:
