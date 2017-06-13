@@ -1,6 +1,22 @@
 version: '3'
 
+volumes:
+   DataVolume:
+
+
 services:
+  recommendation-engine:
+    image: ubuntu
+#    container_name: recommendation_engine
+    tty: true
+    volumes:
+    - DataVolume:/DataVolume
+    labels:
+      brownout.feature: "optional"
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: none
   visualizer:
     image: dockersamples/visualizer:stable
     ports:
@@ -12,8 +28,9 @@ services:
       placement:
         constraints: [node.role == manager]
   front-end:
-#    image: weaveworksdemos/front-end
     image: lukexu/front-end
+    volumes:
+      - DataVolume:/usr/src/app/public/DataVolume
     hostname: front-end
     labels: 
       brownout.feature: "optional"
