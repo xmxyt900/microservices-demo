@@ -1,5 +1,5 @@
 
-#!/bin/bash
-sudo docker stop recommendation_engine
-sudo docker rm recommendation_engine
-sudo docker volume rm DataVolume
+
+#!/bin/sh
+ansible DockerCluster1 -m shell -a 'sh stopRecommendationEngine.sh'
+ansible DockerCluster2 -m shell -a 'sh stopRecommendationEngine.sh'
