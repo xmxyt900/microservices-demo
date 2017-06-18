@@ -17,6 +17,8 @@ services:
       replicas: 2
       restart_policy:
         condition: none
+      placement:
+        constraints: [node.role == worker]
   visualizer:
     image: dockersamples/visualizer:stable
     ports:
