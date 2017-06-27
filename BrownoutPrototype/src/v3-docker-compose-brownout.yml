@@ -52,7 +52,10 @@ services:
       placement:
         constraints: [node.role == manager]     
   catalogue:
-    image: weaveworksdemos/catalogue
+#    image: weaveworksdemos/catalogue
+    image: lukexu/catalogue
+#    ports:
+#      - '80:8081'
     hostname: catalogue
     environment:
       - ZIPKIN=http://zipkin:9411/api/v1/spans
